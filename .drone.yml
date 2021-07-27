@@ -28,6 +28,8 @@ steps:
       - echo Building the Docker image...
       - docker build -t $${CONTAINER_IMAGE}:$DRONE_COMMIT .
       #- docker tag $DOCKER_HUB_USERNAME/$PROJECT_NAME:${DRONE_COMMIT} $DOCKER_HUB_USERNAME/$PROJECT_NAME:${DRONE_COMMIT}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock      
       
   - name: publish
     image: plugins/docker
