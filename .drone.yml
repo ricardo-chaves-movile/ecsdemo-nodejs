@@ -55,12 +55,12 @@ steps:
     commands:
       - echo k8s.yaml started on `date`
       - sed -i -- "s~image":".*~image":" $${CONTAINER_IMAGE}:$DRONE_COMMIT~g" kubernetes/deployment.yaml 
-      - cat kubernetes/deployment.yaml
       - git config --global user.email "droneci@wavy.global"
       - git add .
       - git commit -m "updated k8s version"
+      - mkdir -p $HOME/.ssh
       - echo -n "$SSH_KEY" > ${HOME}/.ssh/id_rsa
-      - chmod 600 /root/.ssh/id_rsa      
+      - chmod 600 ${HOME}/.ssh/id_rsa      
       - git push origin master      
 
 volumes:
