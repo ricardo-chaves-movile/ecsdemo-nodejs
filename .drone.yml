@@ -1,6 +1,7 @@
 kind: pipeline
 type: docker
-name: linux-amd64
+name: ecsdemo-nodejs
+
 global-variables:
   environment: &default_docker_settings 
     CONTAINER_IMAGE: "gcr.io/messaging-305213/${DRONE_REPO_NAME}"
@@ -24,7 +25,7 @@ steps:
       <<: *default_docker_settings
     volumes:
     - name: dockersock
-      path: /var/run/docker.sock      
+      path: /var/run/     
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
@@ -46,4 +47,4 @@ steps:
 volumes:
 - name: dockersock
   host:
-    path: /var/run/docker.sock
+    path: /var/run/
