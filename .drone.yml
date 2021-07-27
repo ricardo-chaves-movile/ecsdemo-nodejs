@@ -59,7 +59,7 @@ steps:
       - git config --global user.email "droneci@wavy.global"
       - git add .
       - git commit -m "updated k8s version"
-      - echo -n "$SSH_KEY" > /root/.ssh/id_rsa
+      - echo -n "$SSH_KEY" > ${HOME}/.ssh/id_rsa
       - chmod 600 /root/.ssh/id_rsa      
       - git push origin master      
 
