@@ -45,6 +45,17 @@ steps:
       - echo Publish started on `date`
       - echo $GCR_AUTH_TOKEN | docker login -u _json_key --password-stdin https://gcr.io      
       - docker push $${CONTAINER_IMAGE}:$DRONE_COMMIT
+      
+  - name: k8s.yaml
+    image: docker:git
+    environment:
+      <<: *default_docker_settings
+    commands:
+      - echo k8s.yaml started on `date`
+      - sed -i -- "s/image:.*/image: $${CONTAINER_IMAGE}:$DRONE_COMMIT/g" kubernetes/deployment.yaml 
+      - git add .
+      - git commit -m "updated version"
+      - git push origin master      
 
 volumes:
 - name: dockersock
