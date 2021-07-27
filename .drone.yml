@@ -34,7 +34,7 @@ steps:
       
   - name: publish
     image: plugins/docker
-    secrets: [ GCR_AUTH_TOKEN ]
+    secrets: [ gcr_auth_token ]
     environment:
       <<: *default_docker_settings
     volumes:
