@@ -22,7 +22,10 @@ steps:
   - name: build
     image: plugins/docker
     environment:
-      <<: *default_docker_settings    
+      <<: *default_docker_settings
+    volumes:
+    - name: dockersock
+      path: /var/run/docker.sock      
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
@@ -40,3 +43,8 @@ steps:
         from_secret: docker_username
       password:
         from_secret: docker_password
+
+  volumes:
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
