@@ -4,8 +4,7 @@ name: linux-amd64
 
 global-variables:
   environment: &default_docker_settings 
-    CONTAINER_REGISTRY: "gcr.io/messaging-305213"
-    CONTAINER_IMAGE: "$${CONTAINER_REGISTRY}/${DRONE_REPO_NAME}"
+    CONTAINER_IMAGE: "gcr.io/messaging-305213/${DRONE_REPO_NAME}"
   
 steps:
   - name: test1
