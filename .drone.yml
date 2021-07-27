@@ -46,7 +46,7 @@ steps:
 #      - echo $GCR_AUTH_TOKEN | docker login -u _json_key --password-stdin https://gcr.io      
 #      - docker push $${CONTAINER_IMAGE}:$DRONE_COMMIT
       
-  - name: update k8s repo
+  - name: update.k8s.repo
     image: docker:git
     environment:
       <<: *default_docker_settings
