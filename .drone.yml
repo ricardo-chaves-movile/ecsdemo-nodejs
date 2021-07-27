@@ -3,10 +3,9 @@ type: docker
 name: linux-amd64
 
 global-variables:
-  - &default_docker_settings 
+  environment: &default_docker_settings 
     CONTAINER_REGISTRY: gcr.io/messaging-305213
-    #CONTAINER_IMAGE: $CONTAINER_REGISTRY/$DRONE_REPO_NAME
-    CONTAINER_IMAGE: gcr.io/messaging-305213/ecsdemo-nodejs
+    CONTAINER_IMAGE: $CONTAINER_REGISTRY/$DRONE_REPO_NAME
   
 steps:
   - name: test1
@@ -23,7 +22,7 @@ steps:
       
   - name: build
     image: docker
-    settings:
+    environment:
       <<: *default_docker_settings    
     commands:
       - echo Build started on `date`
