@@ -34,9 +34,10 @@ steps:
       
   - name: publish
     image: plugins/docker
-    secrets: [ gcr_auth_token ]
     environment:
       <<: *default_docker_settings
+      GCR_AUTH_TOKEN:
+        from_secret: gcr_auth_token
     volumes:
     - name: dockersock
       path: /var/run/        
