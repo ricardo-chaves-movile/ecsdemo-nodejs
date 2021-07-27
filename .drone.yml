@@ -1,7 +1,6 @@
 kind: pipeline
 type: docker
 name: linux-amd64
-
 global-variables:
   environment: &default_docker_settings 
     CONTAINER_IMAGE: "gcr.io/messaging-305213/${DRONE_REPO_NAME}"
