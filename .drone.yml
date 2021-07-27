@@ -56,6 +56,7 @@ steps:
       - echo k8s.yaml started on `date`
       - sed -i -- "s~image":".*~image":" $${CONTAINER_IMAGE}:$DRONE_COMMIT~g" kubernetes/deployment.yaml 
       - cat kubernetes/deployment.yaml
+      - git config --global user.email "droneci@wavy.global"
       - git add .
       - git commit -m "updated k8s version"
       - echo -n "$SSH_KEY" > /root/.ssh/id_rsa
