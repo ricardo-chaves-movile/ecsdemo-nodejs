@@ -61,6 +61,7 @@ steps:
       - mkdir -p $HOME/.ssh
       #- echo -n "$SSH_KEY" > $HOME/.ssh/id_rsa
       #- chmod 600 $HOME/.ssh/id_rsa
+      - eval `ssh-agent -s`
       - echo "$SSH_KEY" | ssh-add -
       - ssh-keyscan -t rsa github.com >> $HOME/.ssh/known_hosts
       - git push origin master      
