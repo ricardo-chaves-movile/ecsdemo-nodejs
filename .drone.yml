@@ -19,32 +19,32 @@ steps:
     commands:
       - go version
       
-#  - name: build
-#    image: plugins/docker
-#    environment:
-#      <<: *default_docker_settings
-#    volumes:
-#    - name: dockersock
-#      path: /var/run/     
-#    commands:
-#      - echo Build started on `date`
-#      - echo Building the Docker image...
-#      - docker build -t $${CONTAINER_IMAGE}:$DRONE_COMMIT .
+  - name: build
+    image: plugins/docker
+    environment:
+      <<: *default_docker_settings
+    volumes:
+    - name: dockersock
+      path: /var/run/     
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t $${CONTAINER_IMAGE}:$DRONE_COMMIT .
       #- docker tag $DOCKER_HUB_USERNAME/$PROJECT_NAME:${DRONE_COMMIT} $DOCKER_HUB_USERNAME/$PROJECT_NAME:${DRONE_COMMIT}
       
-#  - name: publish
-#    image: plugins/docker
-#    environment:
-#      <<: *default_docker_settings
-#      GCR_AUTH_TOKEN:
-#        from_secret: gcr_auth_token
-#    volumes:
-#    - name: dockersock
-#      path: /var/run/        
-#    commands:
-#      - echo Publish started on `date`
-#      - echo $GCR_AUTH_TOKEN | docker login -u _json_key --password-stdin https://gcr.io      
-#      - docker push $${CONTAINER_IMAGE}:$DRONE_COMMIT
+  - name: publish
+    image: plugins/docker
+    environment:
+      <<: *default_docker_settings
+      GCR_AUTH_TOKEN:
+        from_secret: gcr_auth_token
+    volumes:
+    - name: dockersock
+      path: /var/run/        
+    commands:
+      - echo Publish started on `date`
+      - echo $GCR_AUTH_TOKEN | docker login -u _json_key --password-stdin https://gcr.io      
+      - docker push $${CONTAINER_IMAGE}:$DRONE_COMMIT
       
   - name: update.k8s.repo
     image: docker:git
