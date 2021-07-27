@@ -21,7 +21,7 @@ spec:
         app: ecsdemo-nodejs
     spec:
       containers:
-      - image: gcr.io/messaging-305213/ecsdemo-nodejs:9d79e442196d443af453a1c4eba767062b74c003
+      - image: gcr.io/messaging-305213/ecsdemo-nodejs:4ef7bb6640f8dc251fa789e2787c74dacf729655
         imagePullPolicy: Always
         name: ecsdemo-nodejs
         ports:
