@@ -68,6 +68,11 @@ steps:
       - git remote -v
       - git push origin master      
 
+trigger:
+  repo:
+    exclude:
+    - ecsdemo-nodejs/kubernetes
+    
 volumes:
 - name: dockersock
   host:
