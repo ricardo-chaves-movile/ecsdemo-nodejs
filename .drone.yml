@@ -46,7 +46,7 @@ steps:
 #      - echo $GCR_AUTH_TOKEN | docker login -u _json_key --password-stdin https://gcr.io      
 #      - docker push $${CONTAINER_IMAGE}:$DRONE_COMMIT
       
-  - name: k8s.yaml
+  - name: update k8s repo
     image: docker:git
     environment:
       <<: *default_docker_settings
@@ -54,6 +54,7 @@ steps:
         from_secret: ssh_key      
     commands:
       - echo k8s.yaml started on `date`
+      - cd $(mktemp -d)
       - git config --global user.email "droneci@wavy.global"
       - mkdir -p $HOME/.ssh
       - eval `ssh-agent -s`
