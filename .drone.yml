@@ -42,7 +42,8 @@ steps:
       path: /var/run/        
     commands:
       - echo Publish started on `date`
-      - echo $GCR_AUTH_TOKEN | docker login -u _json_key --password-stdin https://gcr.io
+      - echo $GCR_AUTH_TOKEN
+      #- echo $GCR_AUTH_TOKEN | docker login -u _json_key --password-stdin https://gcr.io      
       - docker push $${CONTAINER_IMAGE}:$DRONE_COMMIT
 
 volumes:
