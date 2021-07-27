@@ -35,6 +35,8 @@ steps:
       
   - name: publish
     image: plugins/gcr
+    environment:
+      <<: *default_docker_settings    
     settings:
       repo: $${GCR_REPO}
       tags: $DRONE_COMMIT
