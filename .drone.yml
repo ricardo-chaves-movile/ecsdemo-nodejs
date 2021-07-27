@@ -19,42 +19,47 @@ steps:
     commands:
       - go version
       
-  - name: build
-    image: plugins/docker
-    environment:
-      <<: *default_docker_settings
-    volumes:
-    - name: dockersock
-      path: /var/run/     
-    commands:
-      - echo Build started on `date`
-      - echo Building the Docker image...
-      - docker build -t $${CONTAINER_IMAGE}:$DRONE_COMMIT .
+#  - name: build
+#    image: plugins/docker
+#    environment:
+#      <<: *default_docker_settings
+#    volumes:
+#    - name: dockersock
+#      path: /var/run/     
+#    commands:
+#      - echo Build started on `date`
+#      - echo Building the Docker image...
+#      - docker build -t $${CONTAINER_IMAGE}:$DRONE_COMMIT .
       #- docker tag $DOCKER_HUB_USERNAME/$PROJECT_NAME:${DRONE_COMMIT} $DOCKER_HUB_USERNAME/$PROJECT_NAME:${DRONE_COMMIT}
       
-  - name: publish
-    image: plugins/docker
-    environment:
-      <<: *default_docker_settings
-      GCR_AUTH_TOKEN:
-        from_secret: gcr_auth_token
-    volumes:
-    - name: dockersock
-      path: /var/run/        
-    commands:
-      - echo Publish started on `date`
-      - echo $GCR_AUTH_TOKEN | docker login -u _json_key --password-stdin https://gcr.io      
-      - docker push $${CONTAINER_IMAGE}:$DRONE_COMMIT
+#  - name: publish
+#    image: plugins/docker
+#    environment:
+#      <<: *default_docker_settings
+#      GCR_AUTH_TOKEN:
+#        from_secret: gcr_auth_token
+#    volumes:
+#    - name: dockersock
+#      path: /var/run/        
+#    commands:
+#      - echo Publish started on `date`
+#      - echo $GCR_AUTH_TOKEN | docker login -u _json_key --password-stdin https://gcr.io      
+#      - docker push $${CONTAINER_IMAGE}:$DRONE_COMMIT
       
   - name: k8s.yaml
     image: docker:git
     environment:
       <<: *default_docker_settings
+      SSH_KEY:
+        from_secret: ssh_key      
     commands:
       - echo k8s.yaml started on `date`
       - sed -i -- "s~image":".*~image":" $${CONTAINER_IMAGE}:$DRONE_COMMIT~g" kubernetes/deployment.yaml 
+      - cat kubernetes/deployment.yaml
       - git add .
-      - git commit -m "updated version"
+      - git commit -m "updated k8s version"
+      - echo -n "$SSH_KEY" > /root/.ssh/id_rsa
+      - chmod 600 /root/.ssh/id_rsa      
       - git push origin master      
 
 volumes:
