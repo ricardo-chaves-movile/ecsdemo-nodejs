@@ -1,14 +1,23 @@
+---
 kind: pipeline
-name: default
+type: docker
+name: linux-amd64
+
+platform:
+  arch: amd64
+  os: linux
+  
 steps:
 - name: test
  image: golang:1.10-alpine
  commands:
    - "go test"
+   
 - name: build
  image: golang:1.10-alpine
  commands:
    - "go build -o ./myapp"
+
 - name: publish
  image: plugins/docker
  settings:
