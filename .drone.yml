@@ -5,6 +5,7 @@ name: ecsdemo-nodejs
 global-variables:
   environment: &default_docker_settings 
     CONTAINER_IMAGE: "gcr.io/messaging-305213/${DRONE_REPO_NAME}"
+    GCR_REPO: "messaging-305213/${DRONE_REPO_NAME}"
   
 steps:
   - name: test1
@@ -33,16 +34,12 @@ steps:
       #- docker tag $DOCKER_HUB_USERNAME/$PROJECT_NAME:${DRONE_COMMIT} $DOCKER_HUB_USERNAME/$PROJECT_NAME:${DRONE_COMMIT}
       
   - name: publish
-    image: plugins/docker
+    image: plugins/gcr
     settings:
-      repo: magalixcorp/k8scicd
-      tags:
-        - '${DRONE_COMMIT_SHA:0:7}'
-        - latest
-      username:
-        from_secret: docker_username
-      password:
-        from_secret: docker_password
+      repo: $${GCR_REPO}
+      tags: $DRONE_COMMIT
+      json_key:
+        from_secret: GCR_AUTH_TOKEN
 
 volumes:
 - name: dockersock
