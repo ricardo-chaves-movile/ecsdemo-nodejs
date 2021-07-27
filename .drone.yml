@@ -65,7 +65,7 @@ steps:
       - sed -i -- "s~image":".*~image":" $${CONTAINER_IMAGE}:$DRONE_COMMIT~g" deployment.yaml
       - git add .
       - git commit -m "updated k8s version"      
-      - git push origin master
+      - git push origin main
     
 volumes:
 - name: dockersock
