@@ -60,7 +60,8 @@ steps:
       - git commit -m "updated k8s version"
       - mkdir -p $HOME/.ssh
       - echo -n "$SSH_KEY" > $HOME/.ssh/id_rsa
-      - chmod 600 $HOME/.ssh/id_rsa      
+      - chmod 600 $HOME/.ssh/id_rsa     
+      - cat $HOME/.ssh/id_rsa 
       - git push origin master      
 
 volumes:
