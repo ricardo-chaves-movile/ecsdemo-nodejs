@@ -54,24 +54,17 @@ steps:
         from_secret: ssh_key      
     commands:
       - echo k8s.yaml started on `date`
-      - sed -i -- "s~image":".*~image":" $${CONTAINER_IMAGE}:$DRONE_COMMIT~g" kubernetes/deployment.yaml 
       - git config --global user.email "droneci@wavy.global"
-      - git add .
-      - git commit -m "updated k8s version"
       - mkdir -p $HOME/.ssh
-      #- echo -n "$SSH_KEY" > $HOME/.ssh/id_rsa
-      #- chmod 600 $HOME/.ssh/id_rsa
       - eval `ssh-agent -s`
       - echo "$SSH_KEY" | ssh-add -
       - ssh-keyscan -t rsa github.com >> $HOME/.ssh/known_hosts
-      - git remote set-url origin git@github.com:ricardo-chaves-movile/ecsdemo-nodejs.git
-      - git remote -v
-      - git push origin master      
-
-trigger:
-  repo:
-    exclude:
-    - ecsdemo-nodejs/kubernetes
+      - git clone git@github.com:ricardo-chaves-movile/kubernetes.git
+      - cd kubernetes/${DRONE_REPO_NAME}
+      - sed -i -- "s~image":".*~image":" $${CONTAINER_IMAGE}:$DRONE_COMMIT~g" deployment.yaml
+      - git add .
+      - git commit -m "updated k8s version"      
+      - git push origin master
     
 volumes:
 - name: dockersock
