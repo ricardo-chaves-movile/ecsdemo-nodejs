@@ -52,7 +52,7 @@ steps:
       <<: *default_docker_settings
     commands:
       - echo k8s.yaml started on `date`
-      - sed -i -- "s/image/image: $${CONTAINER_IMAGE}:$DRONE_COMMIT/g" kubernetes/deployment.yaml 
+      - sed -i -- "s/image/image $${CONTAINER_IMAGE}:$DRONE_COMMIT/g" kubernetes/deployment.yaml 
       - git add .
       - git commit -m "updated version"
       - git push origin master      
