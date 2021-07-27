@@ -11,7 +11,7 @@ steps:
     image: node:8.6.0
     group: testing
     commands:
-      - yarn version
+      - node -v
       
   - name: test2
     image: 'golang:1.10-alpine'
