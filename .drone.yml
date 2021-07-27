@@ -1,14 +1,24 @@
 kind: pipeline
 type: docker
 name: linux-amd64
+
 platform:
   arch: amd64
   os: linux
+  
 steps:
-  - name: test
-    image: 'golang:1.10-alpine'
+  - name: test1
+    image: node:8.6.0
+    group: testing
     commands:
-      - go test
+      - yarn run test
+      
+  - name: test2
+    image: 'golang:1.10-alpine'
+    group: testing
+    commands:
+      - go version      
+      
   - name: build
     image: 'golang:1.10-alpine'
     commands:
